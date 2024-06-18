@@ -1,0 +1,61 @@
+---
+title: |
+   | Ethnic revival, economic leverage 
+   | or path dependence? Revisiting the 
+   | bilateral bargaining process in Russia
+subtitle: "Final Paper for the Political Economy course"
+author: "Stepan Polikanov"
+format:
+  pdf:
+    fig-pos: "H"
+    fontsize: 11pt
+    highlight-style: kate
+    fig-width: 10
+    toc: true
+    fig-height: 6
+    fig-cap-location: top
+    include-in-header:
+      - text: |
+          \addtokomafont{disposition}{\rmfamily} 
+          \AddToHook{env/Highlighting/begin}{\scriptsize} 
+          \usepackage{float} 
+          \usepackage[backend = biber, style = apa]{biblatex}
+          \addbibresource{paper.bib}
+execute: 
+  echo: false
+  warning: false
+  error: false
+  message: false
+---
+
+\newpage 
+
+# Introduction
+
+Political economy of nations in transition, both political and economic, is complex and often chaotic, as new political forces are formed, forgotten cleavages revitalized and with shadows of the old regime still present. Perhaps no transition in history was as big as the one following the dissolution of the Soviet Union. The transition from a planned economy to a market economy was accompanied by the end of 70 years of the Communist Party political domination. One distinguishing feature of the Soviet Union was the multi-layered structure of the state, with multiple levels of autonomy and special statuses and rights for ethnic regions. After 1991 the economy collapsed after being exposed to international markets, with many sectors rendered noncompetitive in the new environment \parencite{natkhov_revealed_2023}. The political system was also in turmoil, as centralizing power over the whole territory of the former Russian Soviet Federated Socialist Republic was not an easy feat. Economic, climate, and cultural diversity even of Russia itself was very broad, and after Yeltsin's ascend to power, regions saw an opportunity to repair their economies with federal transfers and assert their political autonomy. This lead to a varying display of sovereignty, with Chechnya being the most extreme, following through with secession, leading to two Chechen wars.
+
+Interpretations of the bargaining process vary greatly. \cite{treisman_russias_1997} asserts that separatist activism stemmed from Muslim/non-Muslim divide, and the starting resources of the region, but not from modernization, in-migration or conflict. He writes that "Russian separatists had more in common with Catalonians and Basques than with Filipino Muslims or Iraqi Kurds" \parencite{treisman_russias_1997}. \cite{dowley_striking_1998} argues that cultural factors had a strong and independent effect, but was not the only factor. She shows that "a number of state elites adopt a strong ethnofederalist position despite the apparent weakness of the group identity of their populations", linking this to natural resource endowments. 
+
+\cite{soderlund_significance_2003} offers a general perspective, whereby "politically superior, wealthy, culturally distinct, geopolitically and geoeconomically important and peripherally located regions" were the beneficiaries of the process. \cite{dusseault_significance_2005} in their critique of \cite{soderlund_significance_2003} argue that the only significant determinants of the bi-lateral process have been economic issues. 
+
+Lastly, \cite{filippov_asymmetric_1999}, provides a perspective that the status quo in fact did not change - that all development were merely a \emph{renegotiation} of the system established before the dissolution in the situation where Soviet regional redistribution needed to be re-established.\footnote{And from the rich literature on modern Russian federalism and its budgetary relations, it was (CITATIONS). } Their interpretation shows a strong path dependence on Soviet-era regional configurations, established all the way back in 1930s. 
+
+This paper asks whether one can isolate the more important factors in the bargaining process, clearly separating different research questions previously pursued by the literature. These boil down to i) why some regions demanded more autonomy and others didn't, ii) why some regions were more successful (largely measured by the timing of treaties, as in \cite{soderlund_significance_2003}) and others weren't, iii) what is the influence of bargaining after Soviet dissolution compared to previous arrangements. 
+
+I hope to comment on this largely abandoned research agenda using newer data in a more comprehensive way.
+
+# Literature Review
+
+
+
+# Theoretical Framework
+
+# Emprical analysis
+
+## Data
+
+## Estimation
+
+# Results
+
+# Conclusion
