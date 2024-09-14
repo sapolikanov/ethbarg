@@ -1,0 +1,83 @@
+Bibliography
+Aggregate Data, Regions of Russia (RoR), 1990-2010
+
+This bibliography includes published and unpublished works that are related 
+to ICPSR study 35355. It includes works that are based on primary
+or secondary analysis of the data, or which describe or critique those
+data or the collection methodology. 
+
+If you publish a work or know of other works that are based on these data,
+please send the complete citation and name of the ICPSR study used to:
+icpsr-biblio-notify@umich.edu 
+
+
+1. Adsera, Alicia; Dalla Pozza, Francesca; Guriev, Sergei; Kleine-
+Rueschkamp, Lukas; Nikolova, Elena; Nikolova, Elena, "Transition, Height
+and Well-Being." EBRD Working Paper No. 234. London, UK: European Bank for
+Reconstruction and Development; SSRN, 2019.
+
+2. Adsera, Alicia; Dalla Pozza, Francesca; Guriev, Sergei; Kleine-
+Rueschkamp, Lukas; Nikolova, Elena; Nikolova, Elena, "Transition, Height
+and Well-Being." Preprint. SSRN, 2020.. DOI: 10.2139/ssrn.3456644
+Abstract: https://ssrn.com/abstract=3456644
+
+3. Baccini, Leonardo; Li, Quan; Mirkina, Irina, "Corporate tax cuts and
+foreign direct investment." Journal of Policy Analysis and Management. Fal
+2014, 33, (4), 977 - 1006. DOI: 10.1002/pam.21786
+Abstract: https://ssrn.com/abstract=3456644
+
+4. Baccini, Leonardo; Li, Quan; Mirkina, Irina; Johnson, Kristina,
+"Regional competition, business politicians, and subnational fiscal
+policy." Business and Politics. 2018, 20, (3), 410 - 437. DOI:
+10.1017/bap.2018.3
+Abstract: https://ssrn.com/abstract=3456644
+
+5. Coates, Dennis; Mirkina, Irina, "Economic freedom of the Russian
+Federation." Journal of Regional Analysis and Policy. 2021, 51, (1), 14 -
+28.
+Full text: https://jrap.scholasticahq.com/article/18950-economic-freedom-of-the-russian-federation
+
+6. Coates, Dennis; Mirkina, Irina; Moorthy, Vivek, "Economic Freedom of the
+Russian Federation." Mar 3, 2017.. DOI: 10.2139/ssrn.2969722
+Abstract: https://ssrn.com/abstract=2969722
+
+7. Crescenzi, Riccardo; Jaax, Alexander, "Innovation in Russia: The
+Territorial Dimension." Papers in Evolutionary Economic Geography (PEEG),
+No. 1509. Utrecht, Netherlands: Utrecht University, Section of Economic
+Geography, Apr 15, 2015.
+Abstract: http://econpapers.repec.org/paper/eguwpaper/1509.htm
+Full text PDF: http://econ.geo.uu.nl/peeg/peeg1509.pdf
+The debate on Russia’s innovation performance has paid little attention to
+the role of geography. This paper addresses this gap by applying an
+‘augmented’ regional knowledge function approach to examine the territorial
+dynamics of innovation in Russia. The empirical results suggest that
+regional R&D investments are strong predictors of local innovative
+performance. However, R&D activities are inadequately connected to regional
+human capital resources. The activities of foreign firms play a fundamental
+role as ‘global knowledge pipelines’. Different territorial dynamics of
+innovation are observed in the European and the Asian part of Russia, with
+regions to the East of the Urals less likely to benefit from interregional
+knowledge spillovers. The historical legacy from the Soviet era still
+emerges as a strong predictor of current innovative performance, shedding
+light on the importance of long-term path dependency in the Russian
+geography of innovation.
+
+8. Uvsh, Delgerjargal, "Reversal of the Resource Curse? Negative Revenue
+Shocks and Development in Russia and Beyond." Dissertation, University of
+Wisconsin, Madison, 2020.
+Abstract: http://econpapers.repec.org/paper/eguwpaper/1509.htm
+Full text PDF: http://econ.geo.uu.nl/peeg/peeg1509.pdf
+The debate on Russia’s innovation performance has paid little attention to
+the role of geography. This paper addresses this gap by applying an
+‘augmented’ regional knowledge function approach to examine the territorial
+dynamics of innovation in Russia. The empirical results suggest that
+regional R&D investments are strong predictors of local innovative
+performance. However, R&D activities are inadequately connected to regional
+human capital resources. The activities of foreign firms play a fundamental
+role as ‘global knowledge pipelines’. Different territorial dynamics of
+innovation are observed in the European and the Asian part of Russia, with
+regions to the East of the Urals less likely to benefit from interregional
+knowledge spillovers. The historical legacy from the Soviet era still
+emerges as a strong predictor of current innovative performance, shedding
+light on the importance of long-term path dependency in the Russian
+geography of innovation.

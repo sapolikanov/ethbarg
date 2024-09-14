@@ -1,0 +1,359 @@
+File Manifest for ICPSR 35355
+
+Mirkina, Irina. Aggregate Data, Regions of Russia (RoR), 1990-2010.
+ICPSR35355-v1. Ann Arbor, MI: Inter-university Consortium for Political and
+Social Research [distributor], 2014-10-14.
+http://doi.org/10.3886/ICPSR35355.v1
+
+
+Study-level Documentation
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-descriptioncitation.pdf       -       -         -       2014-10-14  -
+
+    35355-related_literature.txt        -       -         -       daily       -
+
+    35355-manifest.txt                  -       -         -       daily       -
+
+    35355-Codebook.pdf                  -       -         -       2014-10-14  23e2c7127208ac0bcd09c5a5939e10e4
+
+
+DS0001 Agriculture/Ecology
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0001-Data.dta                 -       1,722     113     2014-10-14  f8feddc17ac79ea7dff2a6d32f381a6f
+
+    35355-0001-Data.rda                 -       1,722     113     2014-10-14  c119ec46ac0de016bf1018229dd271af
+
+    35355-0001-Data.sav                 -       1,722     113     2014-10-14  ca84bd6c174666c0247622812c9e6c84
+
+    35355-0001-Data.stc                 -       1,722     113     2014-10-14  8ee0b405e997e22ec8a909b695df2d18
+
+    35355-0001-Data.tsv                 -       1,722     113     2014-10-14  40534484869b342d8c98d96fd058e7a0
+
+    35355-0001-Data.txt                 1453    1,722     113     2014-10-14  c0154493058960ea308fa2252598363d
+
+    35355-0001-Setup.dct                -       -         -       2014-10-14  780b2d10c878f8c56b88e0c635ea235d
+
+    35355-0001-Setup.do                 -       -         -       2014-10-14  0030565cd7d827bdc3284862eb12cc1c
+
+    35355-0001-Setup.sas                -       -         -       2014-10-14  e2af535097ea516f8f828f1ee678bc60
+
+    35355-0001-Setup.sps                -       -         -       2014-10-14  ced36ad5f2e401f6006c9a5a5e2043a8
+
+
+DS0002 Banks/Insurance
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0002-Data.dta                 -       1,722     31      2014-10-14  15a7c0fe5e22fd7bcd768bf1c9e5c120
+
+    35355-0002-Data.rda                 -       1,722     31      2014-10-14  b589bffd871154d66c395b7e426815dc
+
+    35355-0002-Data.sav                 -       1,722     31      2014-10-14  93c886926b126b144494c290628d544c
+
+    35355-0002-Data.stc                 -       1,722     31      2014-10-14  f200609c319f8ef6ed344c23856f4aff
+
+    35355-0002-Data.tsv                 -       1,722     31      2014-10-14  12e8df07c55b65a8677e2bb904240ab3
+
+    35355-0002-Data.txt                 428     1,722     31      2014-10-14  82e629522a267c9456de34e5cd5d147c
+
+    35355-0002-Setup.dct                -       -         -       2014-10-14  28055ac4aff47a70b77c5221c0532918
+
+    35355-0002-Setup.do                 -       -         -       2014-10-14  15e7bb5419a51a9242816cba0d49f7cb
+
+    35355-0002-Setup.sas                -       -         -       2014-10-14  5f7bfc0ac026dae56d0009dc18b35c28
+
+    35355-0002-Setup.sps                -       -         -       2014-10-14  6192496999ee7b39f2730f7932d396f3
+
+
+DS0003 Budget
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0003-Data.dta                 -       1,722     71      2014-10-14  adda478ababdf468cdf78fdd4bd6d4c7
+
+    35355-0003-Data.rda                 -       1,722     71      2014-10-14  cca8a2383d8eec9b462c7eac2710436e
+
+    35355-0003-Data.sav                 -       1,722     71      2014-10-14  c4b7de559be366fe15eaecd3c59c84ee
+
+    35355-0003-Data.stc                 -       1,722     71      2014-10-14  506e4296f10a5ed2fd158d31331077f1
+
+    35355-0003-Data.tsv                 -       1,722     71      2014-10-14  52fd62f925d2067fbff32eb4a5403b6a
+
+    35355-0003-Data.txt                 1064    1,722     71      2014-10-14  d4397e952f1831ffcc9a59bf113da859
+
+    35355-0003-Setup.dct                -       -         -       2014-10-14  3be829aa74d1576d44af744376d6b1a6
+
+    35355-0003-Setup.do                 -       -         -       2014-10-14  88dec0d9183c6f8cd7acc99035e457df
+
+    35355-0003-Setup.sas                -       -         -       2014-10-14  c55625dddb1178fde481c6b82a92c5fd
+
+    35355-0003-Setup.sps                -       -         -       2014-10-14  9ee90297ac9d397aa1b05f2ff57ff9d1
+
+
+DS0004 Crime
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0004-Data.dta                 -       1,722     22      2014-10-14  be8e65b68037750fce0af750fdebcb13
+
+    35355-0004-Data.rda                 -       1,722     22      2014-10-14  03b0305fd448021f0853aeb45ee31ae4
+
+    35355-0004-Data.sav                 -       1,722     22      2014-10-14  c5468b337cabdd19f43661ca3c9727d4
+
+    35355-0004-Data.stc                 -       1,722     22      2014-10-14  692107c0aa4bd06c966537b1e080c5f5
+
+    35355-0004-Data.tsv                 -       1,722     22      2014-10-14  a35be5f0605084490aa675196e4c13df
+
+    35355-0004-Data.txt                 150     1,722     22      2014-10-14  d2177c5b1aed1c29bf8a18a5df792daf
+
+    35355-0004-Setup.dct                -       -         -       2014-10-14  1fc04d7c4fde4469abe27104c309496c
+
+    35355-0004-Setup.do                 -       -         -       2014-10-14  6a54ee91219d60a1ce0e0b1884d656ce
+
+    35355-0004-Setup.sas                -       -         -       2014-10-14  2cd6d977417034c4c6a97834305a49b2
+
+    35355-0004-Setup.sps                -       -         -       2014-10-14  7c4ec1be5bf5db04a2f1eb223fa91bbc
+
+
+DS0005 Descriptive
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0005-Data.dta                 -       1,722     21      2014-10-14  209006c54075fccd35699779bc85d280
+
+    35355-0005-Data.rda                 -       1,722     21      2014-10-14  5f607f03203672c2dd4d908d31a74455
+
+    35355-0005-Data.sav                 -       1,722     21      2014-10-14  8ae4f3d5c54963e34fc83ceea758ebd9
+
+    35355-0005-Data.stc                 -       1,722     21      2014-10-14  4f78da02a93367bd9d617cca86f01835
+
+    35355-0005-Data.tsv                 -       1,722     21      2014-10-14  446d2bb1631fb1b9a1547661b478bc6f
+
+    35355-0005-Data.txt                 158     1,722     21      2014-10-14  2b53f05b0e83251cfd1c8d63d58d4865
+
+    35355-0005-Setup.dct                -       -         -       2014-10-14  f9d3a50f7cd6ad90749ebd1e5f082338
+
+    35355-0005-Setup.do                 -       -         -       2014-10-14  f4aba1eb81726b60a56b487f9e38e696
+
+    35355-0005-Setup.sas                -       -         -       2014-10-14  a573b2cbe4fcae16869d85415f7fa85a
+
+    35355-0005-Setup.sps                -       -         -       2014-10-14  01307c4d3509852da794329836b199e0
+
+
+DS0006 Education/Culture
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0006-Data.dta                 -       1,722     86      2014-10-14  ebd68bd0f681b71ef21570c8c7c08d06
+
+    35355-0006-Data.rda                 -       1,722     86      2014-10-14  52b5473a2e5756c13e86aa4c92cd649b
+
+    35355-0006-Data.sav                 -       1,722     86      2014-10-14  f0507233222aa7700e3bae97a3b688bb
+
+    35355-0006-Data.stc                 -       1,722     86      2014-10-14  970eacd513ecb2de5261b1d121b2d7a8
+
+    35355-0006-Data.tsv                 -       1,722     86      2014-10-14  37b018266c7824f7c4a6793a4f52617d
+
+    35355-0006-Data.txt                 718     1,722     86      2014-10-14  e8b6cdfa76711d61eceda53fce7662b6
+
+    35355-0006-Setup.dct                -       -         -       2014-10-14  d2eb56f3891b542c8d205f3bec2df249
+
+    35355-0006-Setup.do                 -       -         -       2014-10-14  c3fcbb34a2190a9a0b7c9330ce3b5a8c
+
+    35355-0006-Setup.sas                -       -         -       2014-10-14  853050cd8320e056a95fa9950e2189df
+
+    35355-0006-Setup.sps                -       -         -       2014-10-14  d23e5f2d2892814311cc15b71354c332
+
+
+DS0007 Health
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0007-Data.dta                 -       1,722     33      2014-10-14  1a42c5ce0f434456903ed49c8a716cd1
+
+    35355-0007-Data.rda                 -       1,722     33      2014-10-14  04cbc8724bc8fa740eb1753d30f9aa11
+
+    35355-0007-Data.sav                 -       1,722     33      2014-10-14  07cd08c6b52213a16b317d5fb890f20a
+
+    35355-0007-Data.stc                 -       1,722     33      2014-10-14  34184fcba9485220ab1f6ba800918b50
+
+    35355-0007-Data.tsv                 -       1,722     33      2014-10-14  0646528c08120ce946819d46e05cb302
+
+    35355-0007-Data.txt                 460     1,722     33      2014-10-14  5fc44787aacdd992217c0952b15ac89a
+
+    35355-0007-Setup.dct                -       -         -       2014-10-14  a7f057625c3a5bdd23207a3284421920
+
+    35355-0007-Setup.do                 -       -         -       2014-10-14  b2ef2f34bd174f42572e91d75e39d427
+
+    35355-0007-Setup.sas                -       -         -       2014-10-14  44b8fa08970cb3ff44686a405035894c
+
+    35355-0007-Setup.sps                -       -         -       2014-10-14  6bbea2cf1e42552436b6ee0182751827
+
+
+DS0008 Industries
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0008-Data.dta                 -       1,722     317     2014-10-14  2411f2ac09df68558a74bf13ae784a0c
+
+    35355-0008-Data.rda                 -       1,722     317     2014-10-14  7986c70f8ec14f8ad83f62300c89d58c
+
+    35355-0008-Data.sav                 -       1,722     317     2014-10-14  b5d4482b419df39ff72b92f07d5e6f09
+
+    35355-0008-Data.stc                 -       1,722     317     2014-10-14  2b08fefc651bb54ec22f97af49fad812
+
+    35355-0008-Data.tsv                 -       1,722     317     2014-10-14  f4acfb2ece23101c7e172456dad73ba2
+
+    35355-0008-Data.txt                 4467    1,722     317     2014-10-14  e4f4378aa803ad76f7ca7b65c6ce662c
+
+    35355-0008-Setup.dct                -       -         -       2014-10-14  deb781db3040204d77f426b8026d13bf
+
+    35355-0008-Setup.do                 -       -         -       2014-10-14  eb0ae98259b67682d25bb0ba7dcee7a7
+
+    35355-0008-Setup.sas                -       -         -       2014-10-14  9b2a21110584ff14b401fd0e17ae453d
+
+    35355-0008-Setup.sps                -       -         -       2014-10-14  5769a70aa93b605ee8412063a0ed7f19
+
+
+DS0009 Investment
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0009-Data.dta                 -       1,722     866     2014-10-14  457eb71c960286e371c96310d707d05b
+
+    35355-0009-Data.rda                 -       1,722     866     2014-10-14  2c38619b3a6ad46d0293d6a1c444f336
+
+    35355-0009-Data.sav                 -       1,722     866     2014-10-14  614cf2b24ec72580372c4e006b05675f
+
+    35355-0009-Data.stc                 -       1,722     866     2014-10-14  1759e049926d78cccecbed9d1f2790ee
+
+    35355-0009-Data.tsv                 -       1,722     866     2014-10-14  73dd9229f23cfb7ee71c6a04ce30b808
+
+    35355-0009-Data.txt                 12520   1,722     866     2014-10-14  322cfe40eacc4c2888a0e01c71bd8365
+
+    35355-0009-Setup.dct                -       -         -       2014-10-14  bc05cbb4bdc0093db61f5c4e740c4f80
+
+    35355-0009-Setup.do                 -       -         -       2014-10-14  7003ac1c35d824d4684769a5816deaad
+
+    35355-0009-Setup.sas                -       -         -       2014-10-14  b13bf3d104de34f086b49cfb7a1e2b39
+
+    35355-0009-Setup.sps                -       -         -       2014-10-14  fd5bd422a68c9d2b50c4c1bcc2d959c3
+
+
+DS0010 Population
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0010-Data.dta                 -       1,722     107     2014-10-14  ee76d57707ab28b42cb96579ad6edb10
+
+    35355-0010-Data.rda                 -       1,722     107     2014-10-14  d3d6340087524b44dbb406dcf95bd0c9
+
+    35355-0010-Data.sav                 -       1,722     107     2014-10-14  6761fba786d47ce6f8dbdf3692a3c591
+
+    35355-0010-Data.stc                 -       1,722     107     2014-10-14  ba179dc7f3548e0f1a602b45e6aceb04
+
+    35355-0010-Data.tsv                 -       1,722     107     2014-10-14  5246e344a531c7ccc40372a773ec49cf
+
+    35355-0010-Data.txt                 1188    1,722     107     2014-10-14  0f9b315e3b56cb20f39cd8d15e869687
+
+    35355-0010-Setup.dct                -       -         -       2014-10-14  5c6b22ed602bf3f44997a968dcfff149
+
+    35355-0010-Setup.do                 -       -         -       2014-10-14  679bfbf58c8fd0ab23346ea7d5c8e6b5
+
+    35355-0010-Setup.sas                -       -         -       2014-10-14  60bd464468d052c19b7d896665821e6d
+
+    35355-0010-Setup.sps                -       -         -       2014-10-14  15c67f89d767fe3a123d5b25a19ec2a4
+
+
+DS0011 Prices
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0011-Data.dta                 -       1,722     20      2014-10-14  3bca171c591f69ce6738d85117473abf
+
+    35355-0011-Data.rda                 -       1,722     20      2014-10-14  c644ad05ac31c2ce0e854f6af60135b8
+
+    35355-0011-Data.sav                 -       1,722     20      2014-10-14  2dc31d4422a9f85bb575c1a2095a5602
+
+    35355-0011-Data.stc                 -       1,722     20      2014-10-14  f74a02301d5b67931b114a882c538c95
+
+    35355-0011-Data.tsv                 -       1,722     20      2014-10-14  edcbb1c9b848e570cc7fd92e59f10654
+
+    35355-0011-Data.txt                 287     1,722     20      2014-10-14  dda76d95c188ae0838c117332b7351ed
+
+    35355-0011-Setup.dct                -       -         -       2014-10-14  4bd2a25ee3373f251981f2bdf080b963
+
+    35355-0011-Setup.do                 -       -         -       2014-10-14  59788bd7c7dbc87e78c606d9136f3ae9
+
+    35355-0011-Setup.sas                -       -         -       2014-10-14  e18679ca2f3a5a18afa4bf94b7d1ff3a
+
+    35355-0011-Setup.sps                -       -         -       2014-10-14  7c142865f6765a748ea4c5203377fd8c
+
+
+DS0012 Services/Communication
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0012-Data.dta                 -       1,722     99      2014-10-14  a16cabb49d9c23033c3e18dc270df8f9
+
+    35355-0012-Data.rda                 -       1,722     99      2014-10-14  0a6b7f04a5c1da6b48533e57e5ba4171
+
+    35355-0012-Data.sav                 -       1,722     99      2014-10-14  2de4c68ecacbf384228459b3602b8fde
+
+    35355-0012-Data.stc                 -       1,722     99      2014-10-14  1b1d2c09f1201ab077aec14b63b0a18d
+
+    35355-0012-Data.tsv                 -       1,722     99      2014-10-14  ab545a7627e1361463d18f094dc1e739
+
+    35355-0012-Data.txt                 1170    1,722     99      2014-10-14  7891ca67cb704ff10feaddd5474fe358
+
+    35355-0012-Setup.dct                -       -         -       2014-10-14  2985ec1b0cfcd5de012194ac700c4529
+
+    35355-0012-Setup.do                 -       -         -       2014-10-14  60ca2c13c62f6bdbedd979a7bd2bcf3b
+
+    35355-0012-Setup.sas                -       -         -       2014-10-14  4dcfd4fce2798fc854a1d5e1b994ce69
+
+    35355-0012-Setup.sps                -       -         -       2014-10-14  9dd8cf2938f638ba5eb11530c7c2f69c
+
+
+DS0013 Trade
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    35355-0013-Data.dta                 -       1,722     59      2014-10-14  e1ad4681bf308644d3a7c45997245c7d
+
+    35355-0013-Data.rda                 -       1,722     59      2014-10-14  3b8e2b11718928db6eb1c7f9493b188a
+
+    35355-0013-Data.sav                 -       1,722     59      2014-10-14  b844b94cc251055f11470eab6472250b
+
+    35355-0013-Data.stc                 -       1,722     59      2014-10-14  f8d39ab833ed8ce078a75e26afb61883
+
+    35355-0013-Data.tsv                 -       1,722     59      2014-10-14  74995685fb75a1cbcb9360c409b33ee1
+
+    35355-0013-Data.txt                 833     1,722     59      2014-10-14  d2aab51a219a639bb791eeaa34204068
+
+    35355-0013-Setup.dct                -       -         -       2014-10-14  f38d950e13e2d4eb0fc39d0058e32541
+
+    35355-0013-Setup.do                 -       -         -       2014-10-14  92879d6da48d02cba3052da184d4ed16
+
+    35355-0013-Setup.sas                -       -         -       2014-10-14  f185286caec32d4a31b01782744c9b9b
+
+    35355-0013-Setup.sps                -       -         -       2014-10-14  5a5167470f087811b221ce6b32ffebef
+

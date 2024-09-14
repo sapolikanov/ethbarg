@@ -1,7 +1,7 @@
 ---
 title: |
    | Ethnic revival, economic leverage 
-   | or path dependence? Revisiting the 
+   | and free-riding. Revisiting the 
    | bilateral bargaining process in Russia
 subtitle: "Final Paper for the Political Economy course"
 author: "Stepan Polikanov"
@@ -12,6 +12,7 @@ format:
     highlight-style: kate
     fig-width: 10
     toc: true
+    toc-depth: 2
     fig-height: 6
     fig-cap-location: top
     include-in-header:
@@ -28,13 +29,40 @@ execute:
   message: false
 ---
 
-\newpage 
+```{r}
+library(here)
+library(haven)
+library(purrr)
+library(writexl)
+library(readxl)
+library(kableExtra)
+library(tidyverse)
+library(modelsummary)
+library(performance)
+library(marginaleffects)
+library(patchwork)
+
+built <- read_rds(here("data", "data_built", "built.rds"))
+
+options(scipen = 999)
+
+built_treaties <- built |> 
+  drop_na(TREATY_DATE) |>
+  mutate(after_1995 = if_else(TREATY_DATE >= 1995, "After 1995", "Before 1995"),
+         rank = rank(TREATY_DATE))
+```
+
+  
 
 # Introduction
 
-Political economy of nations in transition, both political and economic, is complex and often chaotic, as new political forces are formed, forgotten cleavages revitalized and with shadows of the old regime still present. Perhaps no transition in history was as big as the one following the dissolution of the Soviet Union. The transition from a planned economy to a market economy was accompanied by the end of 70 years of the Communist Party political domination. One distinguishing feature of the Soviet Union was the multi-layered structure of the state, with multiple levels of autonomy and special statuses and rights for ethnic regions. After 1991 the economy collapsed after being exposed to international markets, with many sectors rendered noncompetitive in the new environment \parencite{natkhov_revealed_2023}. The political system was also in turmoil, as centralizing power over the whole territory of the former Russian Soviet Federated Socialist Republic was not an easy feat. Economic, climate, and cultural diversity even of Russia itself was very broad, and after Yeltsin's ascend to power, regions saw an opportunity to repair their economies with federal transfers and assert their political autonomy. This lead to a varying display of sovereignty, with Chechnya being the most extreme, following through with secession, leading to two Chechen wars.
+Political economy of nations in transition, both political and economic, is complex and often chaotic, as new political forces are formed, forgotten cleavages revitalized and with shadows of the old regime still present. Perhaps no transition in history was as big as the one following the dissolution of the Soviet Union. The transition from a planned economy to a market economy was accompanied by the end of 70 years of the Communist Party political domination. One distinguishing feature of the Soviet Union was the multi-layered structure of the state, with multiple levels of autonomy and special statuses and rights for ethnic regions \parencite{stoner-weiss_central_1999}. After 1991 the economy collapsed after being exposed to international markets, with many sectors rendered noncompetitive in the new environment \parencite{natkhov_revealed_2023}. The political system was also in turmoil, as centralizing power over the whole territory of the former Russian Soviet Federated Socialist Republic was not an easy feat. Economic, climate, and cultural diversity even of Russia itself was very broad, and after Yeltsin's ascend to power, regions saw an opportunity to repair their economies with federal transfers and assert their political autonomy. This lead to a varying display of sovereignty, with Chechnya being the most extreme, following through with secession, leading to two Chechen wars.
+
+In total, throughout 1994-1998, 42 bilateral treaties were signed between the center and the regions \parencite{soderlund_significance_2003}. The process through which regions to sign these treaties with were chosen is, of course, unobservable. One can separate it into two factors: of the regions declaring some degree of autonomy and their demands, and of the center considering these demands. There are slim opportunities to test the first factor, and none to test the second. In any case, once the first treaties was signed with the republic of Tatarstan on February 15, 1994, the the process repeated with some regularity until June 1998 when the last treaty, with the city of Moscow was signed. 
 
 Interpretations of the bargaining process vary greatly. \cite{treisman_russias_1997} asserts that separatist activism stemmed from Muslim/non-Muslim divide, and the starting resources of the region, but not from modernization, in-migration or conflict. He writes that "Russian separatists had more in common with Catalonians and Basques than with Filipino Muslims or Iraqi Kurds" \parencite{treisman_russias_1997}. \cite{dowley_striking_1998} argues that cultural factors had a strong and independent effect, but was not the only factor. She shows that "a number of state elites adopt a strong ethnofederalist position despite the apparent weakness of the group identity of their populations", linking this to natural resource endowments. 
+
+![Evolution of bilateral treaties 1994-1998](td.png){#fig-time}
 
 \cite{soderlund_significance_2003} offers a general perspective, whereby "politically superior, wealthy, culturally distinct, geopolitically and geoeconomically important and peripherally located regions" were the beneficiaries of the process. \cite{dusseault_significance_2005} in their critique of \cite{soderlund_significance_2003} argue that the only significant determinants of the bi-lateral process have been economic issues. 
 
@@ -42,20 +70,627 @@ Lastly, \cite{filippov_asymmetric_1999}, provides a perspective that the status 
 
 This paper asks whether one can isolate the more important factors in the bargaining process, clearly separating different research questions previously pursued by the literature. These boil down to i) why some regions demanded more autonomy and others didn't, ii) why some regions were more successful (largely measured by the timing of treaties, as in \cite{soderlund_significance_2003}) and others weren't, iii) what is the influence of bargaining after Soviet dissolution compared to previous arrangements. 
 
-I hope to comment on this largely abandoned research agenda using newer data in a more comprehensive way.
-
-# Literature Review
-
-
+I hope to comment on this largely abandoned research agenda using newer data.
 
 # Theoretical Framework
+
+## Federal Bargaining
+
+The topic of political bargaining is broad and has seen many applications in the game-theoretic models and political economy more broadly. Models such as \cite{boadway_efficiency_1996} and \cite{madden_competitive_2000} show that redistributional aims of the federal government can be distorted and fulfilled only partially in the presence of competent regional governments. While the broad class of models developed to understand the inner workings of interbudgetary transfers and incentives of federations are not directly applicable to the case studied here, they still inform the general understanding of how a newly formed federation can be expected to behave.
+
+Perhaps the more appropriate model, developed with this particular case in mind, is \cite{treisman_political_1999}. He models the relationship between the center and two regions as a two-stage non-cooperative game. The center sets a tax $T_{Ci}$ on two regions, and the regions decide whether to pay the tax $A$ or refuse $R$. In the latter case, the center resorts to enforcement to punish the defector region(s). However, the amount of punishment the center has available is finite and is given by $\frac{P}{N_R}$, where $P$ is the endowment of punishment resources and $N_R$ is the number of regions refusing.
+
+Regional leaders can maximize net extracted revenue or local support or both. The former depends on the latter, as constituencies support leaders who extract more resources (pay less tax). But local support is also predicated on regional attitudes towards the center, which could come from ethnic or cultural factors \parencite{treisman_political_1999}. The payoffs are:
+
+$$U_i(A) = -\alpha_iT_{Ci}$$
+
+where $\alpha_i$ measures the rate at which changes in central net taxes inversely change the regional leader's utility. 
+
+and 
+
+$$U_i(R) = \sigma_i - \frac{P}{N_R}$$
+
+where $\sigma_i$ is the "rallying around" factor, denoting an increase in local support achieved when confronting center. The leaders therefore maximize their utility given their beliefs of the other region's actions and given the rate of $T_{Ci}$.
+
+The center maximizes $U_C = \rho\sum T_{Ci}^a - \theta(N_R)$, where $\rho$ is the rate at which the center's utility increases with the sum of taxes extracted, and $\theta$ is a function specifying the loss of utility from having to enforce the tax \parencite{treisman_political_1999}. The extensive form of the game is presented in @fig-extensive.
+
+![Extensive form of the game adopted from \cite{treisman_political_1999}](game.png){#fig-extensive}
+
+The model predicts multiple things that are relevant for our case \parencite{treisman_political_1999}:
+
+\begin{itemize}
+  \item Decentralization (non-compliance) will reduce the center's fiscal balance
+  \item As the center's leverage falls, it may opt to use force on the most separatist region and easy taxation on others
+  \item "For states with cultural divisions, the order of political and economic reforms can drastically affect the outcomes. In the same state, increasing public-good provision followed by political decentralization can lead to a fiscally stable, high public-good equilibrium, where the same reforms in the reverse order would have provoked increased interregional redistribution and fiscal instability" \parencite{treisman_political_1999}
+\end{itemize}
+
+These follow from very relaxed assumptions of the model, and therefore can be easily applied to the Russian case. Firstly, one can remove the tax rate imposed by the revenues from natural resources, with center still gaining $0$ if a region refuses to share. In practice, 13 regions announced that the natural resources extracted from their territories are their sovereign right, which is a first step in this direction.
+
+The local support factor has an ambiguous interpretation between different works. The analytical choice here is how to conceptualize it - some authors choose to see genuine ethnic support as the driver of regional leader behavior \parencite{treisman_russias_1997}, while others see it as a post hoc rationalization of the leader's actions \parencite{dusseault_significance_2005}. The choice is likely arbitrary - I argue that regional actions can be decomposed as a function of public support for center defiance, the role of economic factors (by which I mean both the existence of economic leverage and the current state of the economy) and the idiosyncratic preferences of the regional leader.
+Unfortunately, any empirical investigation of such relies on the selection on the dependent variable, as the mere fact a treaty was signed is not necessarily telling of whether less advantageous regions tried to extract a treaty out of center.
+
+With this in mind, I discuss how lowering the costs of confrontation by complying to consessions can lead to a free-rider problem.
+
+## Separatism and free-riding
+
+Works on separatism suggest that secession is problematic not only because of potential territorial losses, but because it lowers costs for others to follow \parencite{forsberg_ethnic_2013, treisman_political_1999}. Ostensibly, this is the reason why the center opted for military resolution of the Chechen conflict. However, I would argue that the concessions to other regions, in form of bilateral treaties, also followed a domino effect: that is, each additional treaty lowered the barrier for other regions to demand the same. The basic idea of military confrontation vs institutional change is encapsulated by \cite{zuber_understanding_2011} in a simple Prisoner's dilemma game. 
+
+\begin{table}[H]
+\centering
+\caption{Confrontation Game, adopted from \cite{zuber_understanding_2011}.}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Center / Region & Cooperate                    & Defect                         \\ \hline
+Cooperate       & Institutional Change: (1, 1) & Secession: (1, 4)              \\ \hline
+Defect          & Status Quo: (4, 1)           & Military Confrontation: (2, 2) \\ \hline
+\end{tabular}
+\end{table}
+
+The equality of payoffs when entering military confrontation is doubtful, but when applied to the Russian case is justified: the country withdrew from the widely unpopular and failed Soviet-Afghan war in 1989 and Chechnya did manage to align itself with international Islamist actors \parencite{wilhelmsen_when_2004}. 
+
+Going back to the domino effect, I argue that while first agreements followed the logic of bargaining around credible secession threats, in particular from Tatarstan, the later agreements were made under reduced costs of participation, which is how regions that did not have a credible "secession card" were able to free-ride on those that did \parencite{yalcin_federal_2005}. One telling indicator is that until 1996, only national republics managed to sign the treaties \parencite{zuber_understanding_2011}. The problem is also illustrated by the routinization of the process: there were 6 instances when treaties were signed with multiple regions in the same month - and all of them after the beginning of 1996, halfway through the process. @fig-protests illustrates the evolution of bilateral treaties signings. 
+
+![Number of protests relateed to ethnic identity by region, 1987-1992](pd.png){#fig-protests}
+
+In other words, \cite{soderlund_significance_2003} is right in asserting that the order matters. He notes that "the earliest signatories earned more rights, while the subsequent bilateral deals were of a more symbolic character". His conclusion that "a lot of prestige was at stake and regional leaders attempted to secure deals as soon as possible to assert their competence and ability to bargain successfully with the federal authorities", however, appears to be wrong. Following from the theoretical models, the center need not make concessions to regions in absence of threat - it would prefer to keep the status quo, and threats are only credible when they can be backed up by popular support from the region's population \parencite{treisman_political_1999, zuber_understanding_2011}.
+
+If the above is true, then the later treaty signatories should have lower levels of ethnic identity and/or mobilization. Moreover, we may also expect later ethnic regions to have lower bargaining power - that is, either no natural resources or lower economic significance overall. I therefore formulate two hypotheses:
+
+\begin{itemize}
+  \item[$H_{1}$:] Regions with lower levels of ethnic identity and/or mobilization are more likely to sign a bilateral treaty with the center later.
+  \item[$H_{2}$:] Ethnic regions with lower bargaining power are more likely to sign a bilateral treaty with the center later.
+\end{itemize}
+
+## Measuring ethnic mobilization
+
+The measures used in the previous literature for the ethnic identity of the regions are typical, but not necessarily appropriate. \cite{soderlund_significance_2003} uses the shares of titular nationalities,. The more comprehensive approach is seen in \cite{dowley_striking_1998}, where she uses Stalin's deportations, non-Christian Orthodox status and use of native language for her Existentialism Index. I propose an alternative measure - the intensity of ethnic or nationality-related protests and riots. Given that the objective is to capture both the intensity of cultural identity and the associated mobilization, this measure is more appropriate. It avoids a simplification of implying that the more people share a titular nationality, the more they identify with it. It makes sense to test this in a variety of ways and contrast the results with measures from the literature. Additionally, I use different dependent variables, as it was established that regression on treaty dummy, for example, bears little results.
+
+\begin{itemize}
+  \item[$H_{3}$:] Regions with higher intensity of ethnic protests are more likely to sign a bilateral treaty with the center.
+  \item[$H_{3a}$:] Regions with higher intensity of ethnic protests are more likely to take actions associated with Separatism.
+\end{itemize}
 
 # Emprical analysis
 
 ## Data
 
-## Estimation
+Most variables come from the Region of Russia (RoR) dataset \parencite{mirkina_aggregate_2014}. It indexes around 1800 variables from 1990 to 2010. Most variables used here do not have full data since 1990 - most start around 1995 (recall that the bargaining window is 1994-1998). I therefore aggregate all non-NA values up to 1998 to capture the mean trends for cross-sectional analysis. In part this is needed because of the turbulent nature of the period, and of the disorganization of official statistics. 
+
+To operationalize my ethnic protest variables, I use Mark Beissenger's compilation of ethnic protests and riots in the Soviet Union and Russia, 1987-1992 \parencite{beissinger_demonstrations_2002}. I aggregate the data by demand category and region to get the intensity. I then calculate the per 1000 population rate by dividing by the 1990 population in thousands. 
+
+I also reuse some variables from previous literature. For example, I use the Separatism Activism index from \cite{treisman_russias_1997} and Mean Autonomy Index from \cite{dowley_striking_1998} to compare the protest intensity variables. 
+
+## Correlations
+
+I start with a bivariate analysis of the data, using pairwise correlations to establish broad relationships within the data.
+
+```{r}
+#| label: tbl-corr
+#| tbl-cap: Pairwise correlations between variables
+#| tbl-pos: H
+  
+built |> 
+  select(`Treaty Rank` = TREATY_RANK, `Time sinced I Treaty` = TREATY_DISCRETE, 
+         `Politico-legal Separatism (Treisman)` = POLITICO_LEGAL_SEP, 
+         `GRP per capita` = GRPPC, `Gini` = GINI, `Net migration` = MIGR, 
+         `Doctors per capita` = DOCTORS, `Theatre visits per capita` = THEATRES, 
+         `Oil production` = PROD_OIL, `(Log) Population` = POP_LOG, 
+         `(Log) Budget revenue` = BREVENUE_LOG, `Share of Russians` = RUSSHARE,
+         `N Loss-making businesses` = LOSSMAKERS, 
+         `Share employed with higher education` = EMPL_HIGH, 
+         `Urbanization` = CITY, `All ethnic protests` = sum_allprotest,
+         `All ethnic protests per capita` = pc_allprotest) |> 
+  datasummary_correlation(output = "kableExtra")|> 
+  column_spec(2:18, width = "4em", latex_valign = "m") |> 
+  kable_styling(latex_options = c("scale_down")) 
+```
+
+## Analysis strategy
+
+### Hypothesis I
+
+To test the first hypothesis, I estimate a simple linear model, where the dependent variable is time elapsed since the first treaty was signed. For robustness, I also use a treaty rank as a dependent variable. The independent variables of interest are the share of Russians and the intensity of ethnic protests 1987-1992. For robustness, I redo the analysis with different controls, omit Saint-Petersburg and Moscow (because they have a lot of ethnic protests as both more protest-prone and ethnically representative places).
+
+### Hypothesis II
+
+To test the second hypothesis, I also use treaty rank as a dependent variables. The independent variables of interest are the ethnic identity variables and the economic performance of the region. The latter is measured by log of GDP per capita to capture the general importance of the regional economy, and whether a region is an oil extractor, to denote capture of natural resources. To check for robustness, I repeat the analysis on the time elapsed since the first treaty was signed.
+
+### Hypothesis III
+
+Lastly, I test the third hypothesis. The typical measure uses either shares of titular nationality, or share of Russians in the region. I test the share of Russians against protest intensity for multiple outcome variables. The first one is the dummy, indicating whether a treaty was eventually signed with the region. As proposed by $H_1$ and $H_2$, the dummy is likely to be misleading, incorporating both credible-secessionist regions and later free-riders. I therefore opt to also test on two measures of genuine regional behavior, underpinned by ethnic identity. The first such measure is the regional central tendency of the autonomy index from \cite{dowley_striking_1998}, calculated by her using regions' public statements. The variable is defined for 89 regions. The second measure is \cite{treisman_russias_1997}'s Index of Separatism Activism, which is coded using regions' formal demands for autonomy (from declaring sovereignty to refusing to send military conscripts). It is defined only for the ethnic regions.
+
 
 # Results
 
+## Hypothesis I
+
+I start by evaluating the Hypothesis 1.
+
+```{r}
+coef_map <- c("RUSSHARE" = "Russian Population Share",
+              "pc_ethno" = "Ethnic protests per 1000 population",
+              "RUSSHARE:log(GRPPC)" = "Russian Population Share:GRPpc (log)",
+              "RUSSHARE:PROD_OIL_DUMMYOil extractor" = "Russian Population Share:Oil extractor",
+              "pc_allprotest" = "Ethnic/national/territorial protests per 1000 population", 
+              "pc_allprotest:log(GRPPC)" = "Protests : GRPPC (log)",
+              "pc_allprotest:PROD_OIL_DUMMYOil extractor" = "Protests : Oil extractor",
+              "PROD_OIL_DUMMYOil extractor" = "Oil extractor region",
+              "log(GRPPC)" = "Log GDP per capita",
+              "POP_LOG" = "Log Population",
+              "BREVENUE_LOG" = "Log Budget Revenue",
+              "GINI" = "Gini",
+              "MIGR_DUMMYPositive" = "Net Migration: Positive",
+              "LOSSMAKERS" = "Loss-making enterprises",
+              "CITY" = "Urbanization", "DOCTORS" = "Doctors per capita",
+              "THEATRES" = "Theatre visits per capita",
+              "BORDER" = "Border region", "DISTANCE_1000" = "Distance to Moscow",
+              "EMPL_HIGH" = "Share of employed with higher education")
+```
+
+```{r}
+#| label: tbl-h1
+#| tbl-cap: Results of testing Hypothesis I
+#| tbl-pos: H
+
+mt1 <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + log(GRPPC)+ GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mt2 <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest + log(GRPPC)+ GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr1 <- lm(TREATY_RANK ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr2 <- lm(TREATY_RANK ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mtrd <- list("Weeks since first treaty" = mt1, "Weeks since first treaty" = mt2,
+             "Treaty rank" = mr1, "Treaty rank" =  mr2)
+
+modelsummary(mtrd, stars = T, coef_map = coef_map, output = "kableExtra",
+             vcov = "stata") |> 
+  kable_styling(latex_options = c("scale_down"))
+```
+
+Linear regression results suggest that measuring ethnic structure by the share of Russians is a significant predictor of both timing and ordering (rank) of the treaties. Controlling for economic performance, inequality, migration trends, urbanization and exposure to market transition, a 10 percent increase in the share of Russians is on average associated $17.17$ week increase in the time elapsed since the first treaty. Moreover, an increase of 1 protest per 1000 of population on average reduces the time elapsed since the first treaty by $2.6$ weeks, all other variables held equal. 
+
+The result is robust to using the treaty rank as a dependent variable, which is probably more appropriate, given the normality of predicted values (see @fig-appendix-h1a-diagnostics-plots). An increase of 10 percent in the share of Russians is associated on average with a $3.27$ increase in the treaty rank, while an increase of 1 protest per 1000 of population is on average associated with a $0.44$ decrease in the treaty rank, everything else held equal.
+
+Some robustness tests are presented in @tbl-a1 and @tbl-a2. The choice between controlling for the logarithm of GRP per capita, logarithm of population and budget revenue does not change the results. Neither does controlling for being an oil extractor region, doctors per capita, theater visits per capita, border region, distance to Moscow and share of employed with higher education. I also run the model omitting Saint-Petersburg and Moscow when using protest as the predictor, as @fig-protests shows a disproportionate number of protests in those cities.
+
+Therefore, bearing in mind that the sample size is only 40 (42), we can accept $H_1$, meaning that the composition of early and late treaty signatory regions differ significantly across ethnic identity lines.
+
+## Hypothesis II
+
+```{r}
+#| label: tbl-h2
+#| tbl-cap: Results of testing Hypothesis II
+#| tbl-pos: H
+
+m2r1 <- lm(TREATY_RANK ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + RUSSHARE*log(GRPPC), data = built_treaties)
+
+m2r2 <- lm(TREATY_RANK ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + pc_allprotest*log(GRPPC), data = built_treaties)
+
+m2r3 <- lm(TREATY_RANK ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY + PROD_OIL_DUMMY
+          + LOSSMAKERS + CITY + RUSSHARE*PROD_OIL_DUMMY, data = built_treaties)
+
+m2r4 <- lm(TREATY_RANK ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY + PROD_OIL_DUMMY
+          + LOSSMAKERS + CITY + pc_allprotest*PROD_OIL_DUMMY, data = built_treaties)
+
+m2trd <- list(m2r1, m2r3, m2r2, m2r4)
+
+modelsummary(m2trd, stars = T, coef_map = coef_map, output = "kableExtra",
+             vcov = "stata") |> 
+  kable_styling(latex_options = c("scale_down"))
+```
+
+To test $H_2$ I add an interaction between the two of the ethnic identity variables and log of GRP per capita as well as the oil extractor dummy. The results show that the only interaction significant on the $1\%$ level is one between the intensity of protests and the log of GRP per capita (also robust when using time since first treaty dependent in @tbl-a3). @tbl-h2 presents the coefficients, while @fig-plot-interaction plots the relationship between ethnic identity and economic variables. 
+
+```{r}
+#| label: fig-plot-interaction
+#| fig-cap: "Interaction effects of ethnic identity and economic performance"
+
+pi1 <- plot_predictions(m2r1, condition = c("RUSSHARE", "GRPPC")) +
+  labs(x = "\nRussian Population Share", y = "Treaty rank",
+       fill = "GRP per capita", color = "GRP per capita") +
+  theme_minimal()
+
+pi2 <- plot_predictions(m2r2, condition = c("pc_allprotest", "GRPPC"))+
+  labs(x = "\nProtests per 1000", y = "Treaty rank",
+       fill = "GRP per capita", color = "GRP per capita") +
+  theme_minimal()+ 
+  theme(legend.position = "none")
+
+pi3 <- plot_predictions(m2r3, condition = c("RUSSHARE", "PROD_OIL_DUMMY"))+
+  labs(x = "\nRussian Population Share", y = "Treaty rank",
+       fill = "Oil production", color = "Oil production") +
+  theme_minimal()
+
+
+pi4 <- plot_predictions(m2r4, condition = c("pc_allprotest", "PROD_OIL_DUMMY"))+
+  labs(x = "\nProtests per 1000", y = "Treaty rank",
+       fill = "Oil production", color = "Oil production") +
+  theme_minimal() + 
+  theme(legend.position = "none")
+
+(pi1 + pi2 + plot_layout(axes = "collect")) / (pi3 + pi4 + plot_layout(axes = "collect")) + plot_layout(guides = "collect", axes = "collect") 
+```
+Despite the lack of statistical significance, the relationship is in the expected direction. Regions with lower GRP per capita and higher intensity of protests are more likely to sign a treaty later than those that have higher GRP per capita. Being an oil extractor also conditions the relationship between ethnic identity and treaty rank. 
+
+I treat this result as mixed evidence in support of $H_2$. While the hypothesized relationship appears, it is not statistically significant. On the other hand, this might be an artifact of having an interaction between two continuous variables under very low sample size. 
+
+## Hypothesis III
+
+```{r}
+#| label: tbl-h3
+#| tbl-cap: Results of testing Hypothesis III
+#| tbl-pos: H
+
+s1r <- lm(TREATY_DUMMY ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s1pe <- lm(TREATY_DUMMY ~ pc_ethno + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s1ps <- lm(TREATY_DUMMY ~ pc_secession + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s1po <- lm(TREATY_DUMMY ~ pc_otherter + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s1pc <- lm(TREATY_DUMMY ~ pc_cult + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s1pa <- lm(TREATY_DUMMY ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s2r <- lm(mean_fed ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s2pe <- lm(mean_fed ~ pc_ethno + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s2ps <- lm(mean_fed ~ pc_secession + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s2po <- lm(mean_fed ~ pc_otherter + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s2pc <- lm(mean_fed ~ pc_cult + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s2pa <- lm(mean_fed ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s3r <- lm(ISA_TREISMAN ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s3pe <- lm(ISA_TREISMAN ~ pc_ethno + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s3ps <- lm(ISA_TREISMAN ~ pc_secession + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s3po <- lm(ISA_TREISMAN ~ pc_otherter + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s3pc <- lm(ISA_TREISMAN ~ pc_cult + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s3pa <- lm(ISA_TREISMAN ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built)
+
+s <- list("Treaty dummy" = list("Russian share" = s1r,
+                                "Ethnic protests" = s1pe,
+                                "Secession protests" = s1ps,
+                                "Other territorial protests" = s1po,
+                                "Cultural protests" = s1pc,
+                                "All protests" = s1pa),
+          "Mean Autonomy Index (Dowley)" = list("Russian share" = s2r,
+                                "Ethnic protests" = s2pe,
+                                "Secession protests" = s2ps,
+                                "Other territorial protests" = s2po,
+                                "Cultural protests" = s2pc,
+                                "All protests" = s2pa),
+          "Index of Separatism Activism (Treisman) " = list("Russian share" = s3r,
+                                "Ethnic protests" = s3pe,
+                                "Secession protests" = s3ps,
+                                "Other territorial protests" = s3po,
+                                "Cultural protests" = s3pc,
+                                "All protests" = s3pa))
+
+modelsummary(s, stars = T, coef_map = c("RUSSHARE" = "Russian share", 
+                                        "pc_ethno" = "Ethnic protests",
+                                        "pc_secession" = "Secession protests",
+                                        "pc_otherter" = "Other territorial protests",
+                                        "pc_cult" = "Language and cultural protests",
+                                        "pc_allprotest" = "All protests"), output = "kableExtra",
+             shape = "rcollapse", gof_map = "none",
+             vcov = "stata", notes = "All models control for economic performance, inequality, migration trends, urbanization and exposure to market transition") |> 
+  kable_styling(latex_options = c("scale_down"))
+```
+
+The results suggest that the intensity of protests is not necessarily a good predictor of regional behavior in 1994-1998, even if it has better conceptual grounding. The only significant relationship is between the intensity of separatism protests and the Mean Autonomy Index by \cite{dowley_striking_1998}. Other relationships do not survive the extended controls, added in @tab-h3a. I therefore reject $H_3$ and $H_{3a}$.
+
 # Conclusion
+
+In this paper, I revisited the political economy of the federal bargaining process in Russia 1994-1998. Merging the insights from the previous literature, I conceptualized the difference between early and late treaty signatories as a "free-rider" problem, whereby regions that did not have credible secession threats were able to extract benefits from the center due to their economic resources. I test and confirm this conjecture empirically. 
+
+I also posit that regions with significant ethnic identity but without the possession of natural resources or overall good economy would also receive institutional concessions from the center. While evidence for this is mixed, the relationship is fleshed out in the data in the expected direction.
+
+Therefore, I can comment on the divide in the literature: in line with theoretical models, (\cite{zuber_understanding_2011} in particular), the earliest concessions were made to regions that both had a credible secession threat (through mobilized ethnic and/or cultural identity) and had economic leverage. The previous finding that there are not many variables predicting whether the treaty would be signed with a region can be explained by the fact that signatories represent two distinct groups: those that had a credible secession threat and free-riders. 
+
+Lastly, I use an alternative operationalization of ethnic identity and mobilization, utilizing data on protests in late Soviet Union and early Russian Federation. The measure performs worse than the share of Russians, typically used in the literature.
+
+\newpage
+
+\printbibliography
+
+\newpage
+
+# Appendix
+
+## Hypothesis I
+
+```{r}
+#| include: false
+
+cmt1 <- plot(check_model(mt1))
+cmt1[[5]] <- cmt1[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+
+cmt2 <- plot(check_model(mt2))
+cmt2[[5]] <- cmt2[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+
+cmr1 <- plot(check_model(mr1))
+cmr1[[5]] <- cmr1[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+
+cmr2 <- plot(check_model(mr2))
+cmr2[[5]] <- cmr2[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+```
+
+```{r}
+#| label: fig-appendix-h1a-diagnostics-plots
+#| fig-width: 10
+#| fig-height: 12
+#| layout: "[48, -4, 48]"
+#| fig-cap: "Hypothesis I weeks since first treaty: Diagnostics plots"
+#| fig-cap-location: top
+#| fig-subcap: 
+#|   - "Russian population share"
+#|   - "Protests per 1000 population"
+
+cmt1
+cmt2
+```
+
+```{r}
+#| label: fig-appendix-h1b-diagnostics-plots
+#| fig-width: 10
+#| fig-height: 12
+#| layout: "[48, -4, 48]"
+#| fig-cap: "Hypothesis I treaty rank: Diagnostics plots"
+#| fig-cap-location: top
+#| fig-subcap: 
+#|   - "Russian population share"
+#|   - "Protests per 1000 population"
+
+cmr1
+cmr2
+```
+
+ 
+
+```{r}
+#| label: tbl-a1
+#| tbl-cap: Alternative specifications for Hypothesis I time since first treaty
+#| tbl-pos: H
+
+mt2a <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest  + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties, 
+          subset = !NAME %in% c("Saint Petersburg", "Moscow"))
+
+mr2a <- lm(TREATY_RANK ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties, 
+          subset = !NAME %in% c("Saint Petersburg", "Moscow"))
+
+mt1b <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + POP_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr1b <- lm(TREATY_RANK ~ RUSSHARE + POP_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mt1c <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr1c <- lm(TREATY_RANK ~ RUSSHARE + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mt2c <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr2c <- lm(TREATY_RANK ~ pc_allprotest + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mt1d <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + DOCTORS + THEATRES + PROD_OIL_DUMMY 
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built_treaties)
+
+mr1d <- lm(TREATY_RANK ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built_treaties)
+
+mt2d <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built_treaties)
+
+mr2d <- lm(TREATY_RANK ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built_treaties)
+
+ma1a <- list(mt1b, mt1c, mt1d, mt2c, mt2a, mt2d)
+
+ma1b <- list(mr1b, mr1c, mr1d, mr2c, mr2a, mr2d)
+
+modelsummary(ma1a, stars = T, coef_map = coef_map, output = "kableExtra",
+             vcov = "stata") |> 
+  kable_styling(latex_options = c("scale_down"))
+```
+
+```{r}
+#| label: tbl-a2
+#| tbl-cap: Alternative specifications for Hypothesis I treaty rank
+#| tbl-pos: H
+
+modelsummary(ma1b, stars = T, coef_map = coef_map, output = "kableExtra",
+             vcov = "stata") |> 
+  kable_styling(latex_options = c("scale_down"))
+```
+
+## Hypothesis II
+
+```{r}
+#| label: tbl-a3
+#| tbl-cap: Alternative specifications for Hypothesis II
+#| tbl-pos: H
+
+m2ar1 <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + RUSSHARE*log(GRPPC), data = built_treaties)
+
+m2ar2 <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + pc_allprotest*log(GRPPC), data = built_treaties)
+
+m2ar3 <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY + PROD_OIL_DUMMY
+          + LOSSMAKERS + CITY + RUSSHARE*PROD_OIL_DUMMY, data = built_treaties)
+
+m2ar4 <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY + PROD_OIL_DUMMY
+          + LOSSMAKERS + CITY + pc_allprotest*PROD_OIL_DUMMY, data = built_treaties)
+
+m2atrd <- list(m2r1, m2r3, m2r2, m2r4)
+
+modelsummary(m2atrd, stars = T, coef_map = coef_map, output = "kableExtra",
+             vcov = "stata") |> 
+  kable_styling(latex_options = c("scale_down"))
+```
+
+## Hypothesis III
+
+```{r}
+#| label: tbl-h3a
+#| tbl-cap: Alternative specifications for Hypothesis III
+#| tbl-pos: H
+
+s1r <- lm(TREATY_DUMMY ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s1pe <- lm(TREATY_DUMMY ~ pc_ethno + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY + DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s1ps <- lm(TREATY_DUMMY ~ pc_secession + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s1po <- lm(TREATY_DUMMY ~ pc_otherter + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s1pc <- lm(TREATY_DUMMY ~ pc_cult + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s1pa <- lm(TREATY_DUMMY ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s2r <- lm(mean_fed ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s2pe <- lm(mean_fed ~ pc_ethno + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s2ps <- lm(mean_fed ~ pc_secession + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s2po <- lm(mean_fed ~ pc_otherter + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s2pc <- lm(mean_fed ~ pc_cult + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s2pa <- lm(mean_fed ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s3r <- lm(ISA_TREISMAN ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s3pe <- lm(ISA_TREISMAN ~ pc_ethno + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s3ps <- lm(ISA_TREISMAN ~ pc_secession + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s3po <- lm(ISA_TREISMAN ~ pc_otherter + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s3pc <- lm(ISA_TREISMAN ~ pc_cult + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s3pa <- lm(ISA_TREISMAN ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY+ DOCTORS + THEATRES + PROD_OIL_DUMMY
+          + BORDER + DISTANCE_1000 + EMPL_HIGH, data = built)
+
+s <- list("Treaty dummy" = list("Russian share" = s1r,
+                                "Ethnic protests" = s1pe,
+                                "Secession protests" = s1ps,
+                                "Other territorial protests" = s1po,
+                                "Cultural protests" = s1pc,
+                                "All protests" = s1pa),
+          "Mean Autonomy Index (Dowley)" = list("Russian share" = s2r,
+                                "Ethnic protests" = s2pe,
+                                "Secession protests" = s2ps,
+                                "Other territorial protests" = s2po,
+                                "Cultural protests" = s2pc,
+                                "All protests" = s2pa),
+          "Index of Separatism Activism (Treisman) " = list("Russian share" = s3r,
+                                "Ethnic protests" = s3pe,
+                                "Secession protests" = s3ps,
+                                "Other territorial protests" = s3po,
+                                "Cultural protests" = s3pc,
+                                "All protests" = s3pa))
+
+modelsummary(s, stars = T, coef_map = c("RUSSHARE" = "Russian share", 
+                                        "pc_ethno" = "Ethnic protests",
+                                        "pc_secession" = "Secession protests",
+                                        "pc_otherter" = "Other territorial protests",
+                                        "pc_cult" = "Language and cultural protests",
+                                        "pc_allprotest" = "All protests"), output = "kableExtra",
+             shape = "rcollapse", gof_map = "none",
+             vcov = "stata", 
+             notes = c("All models control for economic performance, inequality, migration trends, urbanization,", 
+                       "exposure to market transition, being an oil extractor region, doctors per capita, theater visits per capita, border region,",
+                       "distance to Moscow and share of employed with higher education")) |> 
+  kable_styling(latex_options = c("scale_down"))
+```

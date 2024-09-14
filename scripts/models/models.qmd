@@ -1,0 +1,254 @@
+---
+title: |
+   | Estate origins of democracy? 
+   | Social persistence during
+   | communism in Russia
+subtitle: "Final Paper for Social Stratificaition I"
+author: "Stepan Polikanov"
+format:
+  pdf:
+    fig-pos: "H"
+    fontsize: 11pt
+    highlight-style: kate
+    fig-width: 10
+    fig-height: 6
+    fig-cap-location: top
+    include-in-header:
+      - text: |
+          \addtokomafont{disposition}{\rmfamily} 
+          \AddToHook{env/Highlighting/begin}{\scriptsize} 
+          \usepackage{float} 
+          \usepackage[backend = biber, style = apa]{biblatex}
+          \addbibresource{ss1_paper.bib}
+execute: 
+  echo: false
+  warning: false
+  error: false
+  message: false
+---
+
+```{r}
+library(here)
+library(haven)
+library(purrr)
+library(writexl)
+library(readxl)
+library(kableExtra)
+library(tidyverse)
+library(modelsummary)
+library(performance)
+library(marginaleffects)
+library(patchwork)
+
+built <- read_rds(here("data", "data_built", "built.rds"))
+
+options(scipen = 999)
+```
+
+```{r}
+built |> 
+  select(`Treaty Rank` = TREATY_RANK, `Time sinced I Treaty` = TREATY_DISCRETE, 
+         `Politico-legal Separatism (Treisman)` = POLITICO_LEGAL_SEP, 
+         `GRP per capita` = GRPPC, `Gini` = GINI, `Net migration` = MIGR, 
+         `Doctors per capita` = DOCTORS, `Theatre visits per capita` = THEATRES, 
+         `Oil production` = PROD_OIL, `(Log) Population` = POP_LOG, 
+         `(Log) Budget revenue` = BREVENUE_LOG, `Share of Russians` = RUSSHARE,
+         `N Loss-making businesses` = LOSSMAKERS, 
+         `Share employed with higher education` = EMPL_HIGH, 
+         `Urbanization` = CITY, `All ethnic protests` = sum_allprotest,
+         `All ethnic protests per capita` = pc_allprotest) |> 
+  datasummary_correlation(output = "kableExtra")|> 
+  column_spec(2:18, width = "4em", latex_valign = "m") |> 
+  kable_styling(latex_options = c("hold_position", "scale_down")) 
+```
+
+\pagenumbering{gobble}
+
+```{r}
+m1 <- lm(TREATY_DUMMY ~ log(GRPPC), data = built)
+m2 <- lm(TREATY_DUMMY ~ BORDER, data = built)
+m3 <- lm(TREATY_DUMMY ~ DISTANCE_1000, data = built)
+m4 <- lm(TREATY_DUMMY ~ GINI, data = built)
+m5 <- lm(TREATY_DUMMY ~ MIGR_DUMMY, data = built)
+m6 <- lm(TREATY_DUMMY ~ DOCTORS, data = built)
+m7 <- lm(TREATY_DUMMY ~ THEATRES, data = built)
+m8 <- lm(TREATY_DUMMY ~ PROD_OIL_DUMMY, data = built)
+m9 <- lm(TREATY_DUMMY ~ POP_10000, data = built)
+m10 <- lm(TREATY_DUMMY ~ POP_LOG, data = built)
+m11 <- lm(TREATY_DUMMY ~ POP_DENSITY, data = built)
+m12 <- lm(TREATY_DUMMY ~ BREVENUE, data = built)
+m13 <- lm(TREATY_DUMMY ~ BREVENUE_LOG, data = built)
+m14 <- lm(TREATY_DUMMY ~ RUSSHARE, data = built)
+m15 <- lm(TREATY_DUMMY ~ LOSSMAKERS, data = built)
+m16 <- lm(TREATY_DUMMY ~ EMPL_HIGH, data = built)
+m17 <- lm(TREATY_DUMMY ~ CITY, data = built)
+
+m <- list(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16, m17)
+
+modelsummary(m, stars = T, vcov = "stata",
+             coef_map = c("log(GRPPC)" = "Log GDP per capita",
+                          "BORDER" = "Border Region",
+                          "DISTANCE_1000" = "Distance to Moscow, 1000 km",
+                          "GINI" = "Gini",
+                          "MIGR_DUMMYPositive" = "Net Migration: Positive",
+                          "DOCTORS" = "Doctors per 1000",
+                          "THEATRES" = "Theatre visits per 1000",
+                          "PROD_OIL_DUMMYOil extractor" = "Oil extractor",
+                          "POP_10000" = "Population, 10000",
+                          "POP_LOG" = "Log Population",
+                          "POP_DENSITY" = "Population Density, 1000/km^2",
+                          "BREVENUE" = "Total Budget Revenue, mil USD",
+                          "BREVENUE_LOG" = "Log Total Budget Revenue",
+                          "RUSSHARE" = "Russian Population Share",
+                          "LOSSMAKERS" = "Share of loss-making enterprises",
+                          "EMPL_HIGH" = "Employed with higher education",
+                          "CITY" = "Urbanization"),
+             output = "kableExtra") |> 
+  kable_styling(latex_options = c("hold_position", "scale_down")) |> 
+  landscape()
+```
+
+\pagenumbering{arabic}
+
+```{r}
+#| label: by number of protests
+
+built |> 
+  mutate(TREATY_DUMMY = factor(TREATY_DUMMY)) |> 
+  drop_na(TREATY_DUMMY, sum_allprotest) |> 
+  group_by(TREATY_DUMMY) |> 
+  ggplot(aes(x = TREATY_DUMMY, y = log1p(sum_allprotest))) +
+    geom_violin()
+
+built_treaties <- built |> 
+  drop_na(TREATY_DATE) |>
+  mutate(after_1995 = if_else(TREATY_DATE >= 1995, "After 1995", "Before 1995"),
+         rank = rank(TREATY_DATE))
+```
+
+```{r}
+coef_map <- c("RUSSHARE" = "Russian Population Share",
+              "pc_ethno" = "Ethnic protests per 1000 population",
+              "pc_allprotest" = "Ethnic/national/territorial protests per 1000 population", 
+              "log(GRPPC)" = "Log GDP per capita",
+              "POP_LOG" = "Log Population",
+              "BREVENUE_LOG" = "Log Budget Revenue",
+              "GINI" = "Gini",
+              "MIGR_DUMMYPositive" = "Net Migration: Positive",
+              "LOSSMAKERS" = "Loss-making enterprises",
+              "CITY" = "Urbanization")
+```
+
+```{r}
+#| label: h1
+
+mt1 <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + log(GRPPC)+ GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mt2 <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest + log(GRPPC)+ GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr1 <- lm(TREATY_RANK ~ RUSSHARE + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr2 <- lm(TREATY_RANK ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mtrd <- list("Weeks since first treaty" = mt1, "Weeks since first treaty" = mt2,
+             "Treaty rank" = mr1, "Treaty rank" =  mr2)
+
+modelsummary(mtrd, stars = T, coef_map = coef_map)
+```
+
+```{r}
+#| include: false
+
+cmt1 <- plot(check_model(mt1))
+cmt1[[5]] <- cmt1[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+
+cmt2 <- plot(check_model(mt2))
+cmt2[[5]] <- cmt2[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+
+cmr1 <- plot(check_model(mr1))
+cmr1[[5]] <- cmr1[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+
+cmr2 <- plot(check_model(mr2))
+cmr2[[5]] <- cmr2[[5]] + theme(axis.text.x = element_text(
+  angle = 45, hjust = 1)
+  )
+```
+
+```{r}
+#| label: fig-appendix-h1a-diagnostics-plots
+#| fig-width: 10
+#| fig-height: 12
+#| layout: "[48, -4, 48]"
+#| fig-cap: "Hypothesis I weeks since first treaty: Diagnostics plots"
+#| fig-cap-location: top
+#| fig-subcap: 
+#|   - "Russian population share"
+#|   - "Protests per 1000 population"
+
+cmt1
+cmt2
+```
+```{r}
+#| label: fig-appendix-h1b-diagnostics-plots
+#| fig-width: 10
+#| fig-height: 12
+#| layout: "[48, -4, 48]"
+#| fig-cap: "Hypothesis I treaty rank: Diagnostics plots"
+#| fig-cap-location: top
+#| fig-subcap: 
+#|   - "Russian population share"
+#|   - "Protests per 1000 population"
+
+cmr1
+cmr2
+```
+
+```{r}
+#| label: tbl-a1
+#| tbl-cap: Alternative specifications for Hypothesis I tests
+
+mt2a <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest  + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties, 
+          subset = !NAME %in% c("Saint Petersburg", "Moscow"))
+
+mr2a <- lm(TREATY_RANK ~ pc_allprotest + log(GRPPC) + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties, 
+          subset = !NAME %in% c("Saint Petersburg", "Moscow"))
+
+mt1b <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + POP_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr1b <- lm(TREATY_RANK ~ RUSSHARE + POP_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mt1c <- lm(I(TREATY_DISCRETE/7) ~ RUSSHARE + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr1c <- lm(TREATY_RANK ~ RUSSHARE + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mt2c <- lm(I(TREATY_DISCRETE/7) ~ pc_allprotest + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+mr2c <- lm(TREATY_RANK ~ pc_allprotest + BREVENUE_LOG + GINI + MIGR_DUMMY
+          + LOSSMAKERS + CITY, data = built_treaties)
+
+ma1 <- list("Weeks since first treaty" = mt1b, "Weeks since first treaty" = mt1c,
+            "Weeks since first treaty" = mt2c,  "Weeks since first treaty" = mt2a,
+            "Treaty rank" = mr1b, "Treaty rank" = mr1c, 
+            "Treaty rank" = mr2c, "Treaty rank" = mr2a)
+
+modelsummary(ma1, stars = T, coef_map = coef_map, output = "kableExtra") |> 
+  kable_styling(latex_options = c("scale_down"))
+```
+
